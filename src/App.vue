@@ -1,5 +1,6 @@
 <template>
   <v-app id="app">
+    <notifications position="top right" group="foo" />
     <v-navigation-drawer
       fixed
       :clipped="$vuetify.breakpoint.mdAndUp"
