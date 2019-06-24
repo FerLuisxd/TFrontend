@@ -122,10 +122,18 @@ export default {
     },
 
     filtrar(xkills, xdeaths, xassits, xdamage) {
+  
         let me = this;
+        let obj = {}
+        obj.kills = xkills ? xkills :0 
+        obj.deaths = xdeaths ? xdeaths : 0
+        obj.asssists = xassits ? xassits :0
+        obj.damage = xdamage ? xdamage :0
+        console.log(obj)
       axios
-        .get('api/statistics/'+me.xkills+'/'+me.xdeaths+'/'+me.xassits+'/'+me.xdamage)
+        .post('api/statistics/params',obj)
         .then((response)=> {
+                console.log(response)
                 me.statistics = response.data;
         })
         .catch(function(error){
