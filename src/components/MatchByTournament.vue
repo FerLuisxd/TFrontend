@@ -2,7 +2,7 @@
   <v-layout align-start>
     <v-flex>
       <v-toolbar flat color="white">
-        <v-toolbar-title>Matches</v-toolbar-title>
+        <v-toolbar-title>{{tournamentName}} : Matches</v-toolbar-title>
         <v-divider class="mx-2" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-text-field
@@ -15,12 +15,10 @@
         ></v-text-field>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
-          <v-btn slot="activator" color="primary" dark class="mb-2">New</v-btn>
           <v-card>
             <v-card-title>
               <span class="headline">{{ formTitle }}</span>
             </v-card-title>
-
             <v-card-text>
               <v-container grid-list-md>
                 <v-layout wrap>
@@ -93,6 +91,8 @@ export default {
       team2Id: "",
       tournamentId: "",
 
+      tournamentName: "",
+
       //Arreglos
       teams: [],
       tournaments: []
@@ -128,13 +128,16 @@ export default {
         const [year, month, day] = date.split('-')
         return `${year}-${month}-${day}`
       },
-    listar() {
+    listar() {  
+      var k; 
+      k = this.$route.params.id;
       let me = this;
       axios
-        .get("api/match")
+        .get(`api/match/tournament/${k}`)
         .then(function(response) {
           console.log(response);          
           me.matches = response.data;
+          me.tournamentName = response.data[0].tournamentName;
         })
         .catch(function(error) {
           console.log(error);
@@ -194,53 +197,8 @@ export default {
     }).catch(function (error) {
         console.log(error);
     });
-    },
-    
-    guardar() {
-      if (this.editedIndex > -1) {
-        //Código para editar
+    },    
 
-        let me = this;
-        axios 
-          .put("api/match", {
-            id:           me.id,
-            fase      :        me.fase,
-            team1Id      :        me.team1Id,
-            team2Id      :    me.team2Id,
-            tournamentId   :   me.tournamentId,
-            winnerId      :     me.winnerId
-          })
-          .then(function(response) {
-              console.log(response);
-            me.close();
-            me.listar();
-            me.limpiar();
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
-      } else {
-        //Código para guardar
-        let me = this;
-        axios
-          .post("api/match", {
-            fase      :        me.fase,
-            team1Id      :        me.team1Id,
-            team2Id      :    me.team2Id,
-            tournamentId   :   me.tournamentId,
-            winnerId      :     me.winnerId
-          })
-          .then(function(response) {
-              console.log(response);
-            me.close();
-            me.listar();
-            me.limpiar();
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
-      }
-    }
   }
 };
 </script>

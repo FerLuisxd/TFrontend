@@ -136,11 +136,11 @@ export default {
   },
 
   methods: {
-    toMatch(id) {
-      this.$router.push(`match/${id}`);
-    },
-    formatDate(date) {
-      if (!date) return null;
+        toMatch(id){
+          this.$router.push(`/match/tournament/${id}`)
+        },
+       formatDate (date) {
+        if (!date) return null
 
       const [year, month, day] = date.split("-");
       return `${year}-${month}-${day}`;
