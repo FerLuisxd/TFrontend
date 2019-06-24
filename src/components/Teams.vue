@@ -112,26 +112,9 @@ export default {
     this.listar();
     this.listartournaments();
   },
-  deleteItem(id)
-    {
-      let me = this;
-      axios
-        .delete('api/team/'+id)
-        .then((response)=> {
-          me.teams = response.data;
-          this.listar();
-          if (response.data != true) {
-          this.$notify({
-            group: "foo",
-            type: 'warn',
-            title: "Alerta",
-            text: "No se puede borrar porque el equipo esta participando en un torneo"
-          });}
-        })
-        .catch(function(error){
-          console.log(error);
-        });
-    },
+
+ 
+
   methods: {
     listar() {
       //TODO
@@ -152,6 +135,36 @@ export default {
       this.editedIndex = 1;
       this.dialog = true;
     },
+
+    deleteItem(id)
+    {
+      let me = this;
+      axios
+        .delete('api/team/'+id)
+        .then((response)=> {
+          me.teams = response.data;
+          if (response.data == true) {
+          this.$notify({
+            group: "foo",
+            type: 'success',
+            title: "Alerta",
+            text: "Datos del torneo generados"
+          });
+          this.listar();
+          }
+          if (response.data != true) {
+          this.$notify({
+            group: "foo",
+            type: 'warn',
+            title: "Alerta",
+            text: "No se puede borrar porque el equipo esta en un torneo en curso"
+          });}
+        })
+        .catch(function(error){
+          console.log(error);
+        });
+    },
+
     close() {
       this.dialog = false;
     },

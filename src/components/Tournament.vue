@@ -82,12 +82,12 @@ export default {
       dialog: false,
       headers: [
         { text: "Opciones", value: "opciones", sortable: false },
-        { text: "Name", value: "name", sortable: false },
-        { text: "Date", value: "date", sortable: false },
-        { text: "Winner", value: "winner" },
-        { text: "Creador", value: "playerName" },
-        { text: "Teams Number", value: "nTeams" },
-        { text: "Mode", value: "modeFormat" }, 
+        { text: "Name", value: "name"},
+        { text: "Date", value: "date"},
+        { text: "Winner", value: "winner"},
+        { text: "Creador", value: "playerName"},
+        { text: "Teams Number", value: "nTeams"},
+        { text: "Mode", value: "modeFormat"}, 
         { text: "Game", value: "game" }
       ],
       search: "",
@@ -226,6 +226,15 @@ export default {
       console.log(id);
       axios.put(`api/tournament/${id}`).then(response => {
         console.log("response", response.data);
+        if (response.data == true) {
+          this.$notify({
+            group: "foo",
+            type: 'success',
+            title: "Alerta",
+            text: "Datos del torneo generados"
+          });
+          this.listar();
+        }
         if (response.data != true) {
           this.$notify({
             group: "foo",

@@ -163,13 +163,21 @@ export default {
         .delete('api/player/'+id)
         .then((response)=> {
           me.players = response.data;
+          if (response.data == true) {
+          this.$notify({
+            group: "foo",
+            type: 'success',
+            title: "Alerta",
+            text: "Datos del torneo generados"
+          });
           this.listar();
+          }
           if (response.data != true) {
           this.$notify({
             group: "foo",
             type: 'warn',
             title: "Alerta",
-            text: "No se puede guardar porque el usuario ya tiene un torneo en curso"
+            text: "No se puede borrar porque el usuario esta en un torneo en curso"
           });}
         })
         .catch(function(error){
