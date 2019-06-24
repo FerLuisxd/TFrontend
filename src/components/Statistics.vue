@@ -14,6 +14,34 @@
           hide-details
         ></v-text-field>
         <v-spacer></v-spacer>
+
+        <v-dialog v-model="dialog" max-width="500px">
+        <v-btn slot="activator" color="blue" dark class="mb-2">Filtrar</v-btn>
+        
+         <v-card>
+             <v-card-text>
+              <v-container grid-list-md>
+                <v-layout wrap>
+                  <v-flex xs12 sm12 md12>
+                    <v-text-field v-model="xkills" label="Kills"></v-text-field>
+                    <v-text-field v-model="xdeaths" label="Deaths"></v-text-field>
+                    <v-text-field v-model="xassists" label="Assists"></v-text-field>
+                    <v-text-field v-model="xdamage" label="Damage"></v-text-field>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card-text>
+
+             <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" flat @click.native="filtrar(xkills, xdeaths, xassists, xdamage)">Filtrar</v-btn>
+              <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
+            </v-card-actions>
+
+         </v-card>
+        </v-dialog>
+
+
       </v-toolbar>
       <v-data-table :headers="headers" :items="statistics" :search="search" class="elevation-1">
         <template slot="items" slot-scope="props">
@@ -93,9 +121,26 @@ export default {
         });
     },
 
+    filtrar(xkills, xdeaths, xassits, xdamage) {
+  
+        let me = this;
+        let obj = {}
+        obj.kills = xkills ? xkills :0 
+        obj.deaths = xdeaths ? xdeaths : 0
+        obj.asssists = xassits ? xassits :0
+        obj.damage = xdamage ? xdamage :0
+        console.log(obj)
+      axios
+        .post('api/statistics/params',obj)
+        .then((response)=> {
+                console.log(response)
+                me.statistics = response.data;
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+    },
 
-
-    
     editItem(item) {
       
     },

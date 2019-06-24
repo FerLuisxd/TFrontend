@@ -224,8 +224,7 @@ export default {
     {           
         console.log(id);
         axios 
-          .put(`api/tournament/${id}`, {            
-          })             
+          .put(`api/tournament/${id}`)             
     },
     guardar() {
       if (this.editedIndex > -1) {
