@@ -49,7 +49,7 @@
            <v-btn color="gray" @click="redirect(props.item.playerId)">Check All</v-btn>
           </td>  
           <td>{{ props.item.matchId }}</td>
-          <td>{{ props.item.teams.name}}</td>
+          <td>{{ props.item.player.teamId}}</td>
           <td>{{ props.item.playerName }}</td>
           <td>{{ props.item.kills }}</td>
           <td>{{ props.item.deaths }}</td>
