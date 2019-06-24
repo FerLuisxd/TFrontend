@@ -53,6 +53,7 @@
 
           
           <td class="justify-content-start layout px-5">
+            <v-icon small class="mr-2" @click="deleteItem(props.item.id)">delete</v-icon>
            <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
           <v-btn color="gray" @click="redirect(props.item.id)" >Check Statistics</v-btn>
           </td>
@@ -154,6 +155,21 @@ export default {
       this.editedIndex = 1;
       this.dialog = true;
     },
+
+    deleteItem(id)
+    {
+      let me = this;
+      axios
+        .delete('api/player/'+id)
+        .then((response)=> {
+          me.players = response.data;
+          this.listar();
+        })
+        .catch(function(error){
+          console.log(error);
+        });
+    },
+
     close() {
       this.dialog = false;
     },
