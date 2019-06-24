@@ -51,14 +51,16 @@
       <v-data-table :headers="headers" :items="players" :search="search" class="elevation-12"> 
         <template slot="items" slot-scope="props">
 
-
+          
           <td class="justify-content-start layout px-5">
            <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
+          <v-btn color="gray" @click="redirect(props.item.id)" >Check Statistics</v-btn>
           </td>
+          
 
           <td>{{ props.item.name }}</td>    
           <td>{{ props.item.gamePreferences }}</td>
-          <td>{{ props.item.teamId }}</td> 
+          <td>{{ props.item.teamName }}</td> 
           
         </template>
         <template slot="no-data">
@@ -162,6 +164,10 @@ export default {
       this.teamId = "";
       //this.direccion = "";
       //this.telefono = "";
+    },
+    
+    redirect(string){
+        this.$router.push(`Statistics/player/`+string)
     },
     guardar() {
      //TODO

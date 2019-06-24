@@ -10,6 +10,7 @@ import VueRouter from 'vue-router';
 import Statistics from './components/Statistics.vue'
 import MatchByTournament from './components/MatchByTournament.vue'
 import StatisticsByMatch from './components/StatisticsByMatch.vue'
+import Statistics_Player from './components/Statistics_Player.vue'
 
 Vue.use(VueRouter)
 
@@ -69,6 +70,11 @@ export default new Router({
       path: '/Statistics/match/:id',
       name: 'StatisticsByMatch',
       component: StatisticsByMatch
+    },
+    {
+      path: '/Statistics/player/:id',
+      name:'Statistics_Player',
+      component:Statistics_Player
     }
 
 
