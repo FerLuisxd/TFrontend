@@ -278,7 +278,6 @@ export default {
             id: me.id,
             name: me.name,
             date: me.dateFormatted,
-            winner: me.winner,
             playerId: me.playerId,
             nTeams: me.nTeams,
             modeId: me.modeId,

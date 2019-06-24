@@ -49,9 +49,8 @@
            <v-btn color="gray" @click="redirect(props.item.playerId)">Check All</v-btn>
           </td>  
           <td>{{ props.item.matchId }}</td>
-          <td>{{ props.item.player.teamId}}</td>
+          <td>{{ props.item.teamName}}</td>
           <td>{{ props.item.playerName }}</td>
-          <td>{{ props.item.player.teamId }}</td>
           <td>{{ props.item.kills }}</td>
           <td>{{ props.item.deaths }}</td>
           <td>{{ props.item.assists }}</td>
@@ -72,9 +71,8 @@ export default {
       headers: [
         { text: "Opciones", value: "opciones", sortable: false },
         { text: "Match", value: "matchId", sortable: true },
-        { text: "Team", value: "teamId", sortable: true },
+        { text: "Team", value: "teamName", sortable: true },
         { text: "Player", value: "playerName", sortable: true },
-        { text: "TeamId", value: "player.teamId", sortable: true },
         { text: "Kills", value: "kills", sortable: false },
         { text: "Deaths", value: "deaths" , sortable: false},
         { text: "Assists", value: "assists", sortable: false },
