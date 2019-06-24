@@ -61,7 +61,10 @@ export default {
       deaths: "",
       assists: "",
       damage: "", 
-
+      xkills:"",
+      xdeaths:"",
+      xassists:"",
+      xdamage:"",
       //Arreglos
     };
   },
