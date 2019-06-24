@@ -42,6 +42,9 @@
                   <v-flex xs12 sm12 md12>
                     <v-select v-model="modeId" :items="modes" label="Mode"></v-select>
                   </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <v-text-field v-model="game" label="game"></v-text-field>
+                  </v-flex>
                 </v-layout>
               </v-container>
             </v-card-text>
@@ -68,6 +71,7 @@
           <td>{{ props.item.playerName }}</td>
           <td>{{ props.item.nTeams }}</td>
           <td>{{ props.item.modeFormat }}</td>
+          <td>{{ props.item.game }}</td>
         </template>
       </v-data-table>
     </v-flex>
@@ -89,11 +93,12 @@ export default {
         { text: "Winner", value: "winner" },
         { text: "Creador", value: "playerName" },
         { text: "Teams Number", value: "nTeams" },
-        { text: "Mode", value: "modeFormat" }
+        { text: "Mode", value: "modeFormat" }, 
+        { text: "Game", value: "game" }
       ],
       search: "",
       editedIndex: -1,
-
+      game: "",
       //Model
       id: "",
       name: "",
@@ -166,7 +171,7 @@ export default {
       this.playerId = item.playerId;
       this.nTeams = item.nTeams;
       this.modeId = item.modeId;
-
+      this.game = item.game;
       this.editedIndex = 1;
       this.dialog = true;
     },
@@ -181,6 +186,7 @@ export default {
       this.playerId = "";
       this.nTeams = "";
       this.modeId = "";
+      this.game = "";
     },
 
     listarplayers() {
@@ -249,7 +255,8 @@ export default {
             winner: me.winner,
             playerId: me.playerId,
             nTeams: me.nTeams,
-            modeId: me.modeId
+            modeId: me.modeId,
+            game : me.game,
           })
           .then(function(response) {
             console.log(response);
@@ -270,7 +277,8 @@ export default {
             winner: me.winner,
             playerId: me.playerId,
             nTeams: me.nTeams,
-            modeId: me.modeId
+            modeId: me.modeId,
+            game: me.game
           })
           .then(function(response) {
             console.log(response);
