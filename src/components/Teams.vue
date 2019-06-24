@@ -54,7 +54,7 @@
 
           <td>{{ props.item.name }}</td>    
           <td>{{ props.item.nMembers }}</td>
-          <td>{{ props.item.tournamentId }}</td>  
+          <td>{{ props.item.tournamentName }}</td>  
           
         </template>
         <template slot="no-data">
@@ -75,7 +75,7 @@ export default {
           {text: "Options",value: "opciones", sortable: false},
         { text: "Name", value: "name", sortable: false },           ///CAMPOS
         { text: "Teammates", value: "nMembers", sortable: false },  
-        { text: "Tournament", value: "tournamentId" }             ///CAMPOS
+        { text: "Tournament", value: "tournamentName" }             ///CAMPOS
        // { text: "Apellidos", value: "apellidos", sortable: false },          ///CAMPOS
         //{ text: "Dni", value: "dni" }, 
         //{ text: "Direccion", value: "direccion" },                           ///CAMPOS

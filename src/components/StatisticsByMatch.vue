@@ -46,9 +46,10 @@
       <v-data-table :headers="headers" :items="statistics" :search="search" class="elevation-1">         
         <template slot="items" slot-scope="props">
         <td class="justify-content-start layout px-5">                 
-           <v-btn color="gray" @click="redirect(props.item.playerId)">Check Statistics</v-btn>
+           <v-btn color="gray" @click="redirect(props.item.playerId)">Check All</v-btn>
           </td>  
           <td>{{ props.item.matchId }}</td>
+          <td>{{ props.item.player.teamId}}</td>
           <td>{{ props.item.playerName }}</td>
           <td>{{ props.item.player.teamId }}</td>
           <td>{{ props.item.kills }}</td>
@@ -71,6 +72,7 @@ export default {
       headers: [
         { text: "Opciones", value: "opciones", sortable: false },
         { text: "Match", value: "matchId", sortable: true },
+        { text: "Team", value: "teamId", sortable: true },
         { text: "Player", value: "playerName", sortable: true },
         { text: "TeamId", value: "player.teamId", sortable: true },
         { text: "Kills", value: "kills", sortable: false },
@@ -95,7 +97,8 @@ export default {
       xdamage:"",
 
       //Arreglos
-      players: []
+      players: [],
+      teams:""
     };
   },
   computed: {
@@ -168,6 +171,17 @@ export default {
                         value: p.id
                     });
                 });
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        listarteams(a) {
+            let me = this;
+            var teamname;
+            axios.get('api/team/'+a).then( (response) =>{
+                // console.log(response.data);
+                me.teams = response.data;
+
             }).catch(function (error) {
                 console.log(error);
             });
