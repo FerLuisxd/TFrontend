@@ -35,7 +35,7 @@
               <v-list-tile-action>
                 <v-icon>table_chart</v-icon>
               </v-list-tile-action>
-              <v-list-tile-content>
+              <v-list-tile-content color = "red">
                 <v-list-tile-title>
                   Inicio
                 </v-list-tile-title>
@@ -45,7 +45,7 @@
               <v-list-tile-action>
                 <v-icon>table_chart</v-icon>
               </v-list-tile-action>
-              <v-list-tile-content>
+              <v-list-tile-content color = "red">
                 <v-list-tile-title>
                   Modes
                 </v-list-tile-title>
@@ -140,9 +140,9 @@
     <v-footer dark height="auto">
       <v-layout justify-center>
         <v-flex text-xs-center>
-          <v-card flat tile color="primary" class="white--text">
+          <v-card flat tile color="blue darken-3" class="white--text">
             <v-card-text class="white--text pt-0">
-             HAMP &copy;2019
+             KYAAA &copy;2019
             </v-card-text>
           </v-card>
         </v-flex>

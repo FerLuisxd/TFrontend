@@ -15,7 +15,7 @@
         ></v-text-field>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
-          <v-btn slot="activator" color="primary" dark class="mb-2">New</v-btn>
+          <v-btn slot="activator" color="blue" dark class="mb-2">New</v-btn>
           <v-card>
             <v-card-title>
               <span class="headline">{{ formTitle }}</span>
