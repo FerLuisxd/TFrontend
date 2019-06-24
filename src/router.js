@@ -67,12 +67,12 @@ export default new Router({
       component: MatchByTournament
     },
     {
-      path: '/Statistics/match/:id',
+      path: '/statistics/match/:id',
       name: 'StatisticsByMatch',
       component: StatisticsByMatch
     },
     {
-      path: '/Statistics/player/:id',
+      path: '/statistics/player/:id',
       name:'StatisticsByPlayer',
       component:StatisticsByPlayer
     }

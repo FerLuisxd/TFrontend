@@ -46,7 +46,7 @@
       <v-data-table :headers="headers" :items="statistics" :search="search" class="elevation-1">         
         <template slot="items" slot-scope="props">
         <td class="justify-content-start layout px-5">                 
-           <v-btn color="gray" @click="redirect(props.item.playerId)" >Check Statistics</v-btn>
+           <v-btn color="gray" @click="redirect(props.item.playerId)">Check Statistics</v-btn>
           </td>  
           <td>{{ props.item.matchId }}</td>
           <td>{{ props.item.playerName }}</td>
@@ -113,8 +113,8 @@ export default {
     this.listarplayers();
   },
   methods: {
-    redirect(string){
-        this.$router.push(`/Statistics/player/`+string)
+    redirect(id){
+        this.$router.push(`/statistics/player/${id}`)
     },
     listar() {
       var k; 
