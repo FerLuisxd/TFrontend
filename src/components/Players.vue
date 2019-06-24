@@ -196,7 +196,7 @@ export default {
             id: me.id,
             name: me.name,
             gamePreferences: me.gamePreferences,
-            teamId: me.teamId
+            teamId: me.teamId!=0? me.teamId : null 
           })
           .then(function(response) {
             me.close();

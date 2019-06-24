@@ -5,7 +5,10 @@ import router from './router'
 import store from './store.js'
 import VueRouter from 'vue-router'
 import axios from 'axios'
-
+import Notifications from 'vue-notification'
+ 
+ 
+Vue.use(Notifications)
 
 Vue.use(VueRouter)
 Vue.config.productionTip = false
