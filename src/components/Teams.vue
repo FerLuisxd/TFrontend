@@ -28,9 +28,6 @@
                     <v-text-field v-model="name" label="Name"></v-text-field>          
                   </v-flex>
                   <v-flex xs12 sm12 md12>
-                    <v-text-field v-model="nMembers" label="nMembers"></v-text-field>     
-                  </v-flex>
-                  <v-flex xs12 sm12 md12>
                     <v-select v-model="tournamentId" :items="tournaments" label="Tournament"></v-select>   
                   </v-flex>
                  
@@ -91,8 +88,8 @@ export default {
       
       id:"",
       name:"",
-      nMembers:"",
-      tournamentId:"",
+      nMembers:0    ,
+      tournamentId:null,
 
       tournaments:[]
 
@@ -160,8 +157,8 @@ export default {
     limpiar() {
       this.id = "";
       this.name = "";
-      this.nMembers = "";
-      this.tournamentId = "";
+      this.nMembers = 0;
+      this.tournamentId = null;
       //this.direccion = "";
       //this.telefono = "";
     },
@@ -191,7 +188,7 @@ export default {
             id: me.id,
             name: me.name,
             nMembers: me.nMembers,
-            tournamentId: me.tournamentId
+            tournamentId: me.tournamentId!=null? me.tournamentId : null
           })
           .then(function(response) {
             me.close();
@@ -208,7 +205,7 @@ export default {
           .post("api/team", {
             name: me.name,
             nMembers: me.nMembers,
-            tournamentId: me.tournamentId
+            tournamentId: me.tournamentId !=null? me.tournamentId : null
           })
           .then(function(response) {
             me.close();

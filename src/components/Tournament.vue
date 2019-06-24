@@ -31,13 +31,7 @@
                     <v-date-picker v-model="date" label="Date"></v-date-picker>
                   </v-flex>
                   <v-flex xs12 sm12 md12>
-                    <v-text-field v-model="winner" label="Winner"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm12 md12>
                     <v-select v-model="playerId" :items="players" label="Creator"></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm12 md12>
-                    <v-text-field v-model="nTeams" label="Teams Number"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm12 md12>
                     <v-select v-model="modeId" :items="modes" label="Mode"></v-select>
@@ -103,9 +97,9 @@ export default {
       id: "",
       name: "",
       date: "",
-      winner: "",
+      winner: null,
       playerId: "",
-      nTeams: "",
+      nTeams: 0,
       modeId: "",
       modeFormat: "",
 
@@ -182,9 +176,9 @@ export default {
       this.id = "";
       this.name = "";
       this.date = "";
-      this.winner = "";
+      this.winner = null;
       this.playerId = "";
-      this.nTeams = "";
+      this.nTeams = 0;
       this.modeId = "";
       this.game = "";
     },
@@ -268,6 +262,13 @@ export default {
           })
           .then(function(response) {
             console.log(response);
+             if (response.data != true) {
+          this.$notify({
+            group: "foo",
+            type: 'warn',
+            title: "Alerta",
+            text: "No se puede guardar porque el usuario ya tiene un torneo en curso o ese nombre de torneo ya existe"
+          });}
             me.close();
             me.listar();
             me.limpiar();
@@ -290,6 +291,13 @@ export default {
           })
           .then(function(response) {
             console.log(response);
+                        if (response.data != true) {
+          this.$notify({
+            group: "foo",
+            type: 'warn',
+            title: "Alerta",
+            text: "No se puede guardar porque el usuario ya tiene un torneo en curso o ese nombre de torneo ya existe"
+          });}
             me.close();
             me.listar();
             me.limpiar();
