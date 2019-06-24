@@ -142,13 +142,12 @@ export default {
                   value:p.id
               });
           })
-      }).catch(function(error){
-          console.log(error);
+      }).catch(error =>{
           this.$notify({
             group: "foo",
             type: 'error',
             title: "Error",
-            text: `Error de Player`
+            text: "Error de Player"
           }); 
       });
     },
@@ -186,13 +185,12 @@ export default {
             text: "No se puede borrar porque el usuario esta en un torneo en curso"
           });}
         })
-        .catch(function(error){
-          console.log(error);
-          this.$notify({
+        .catch(error => {
+            this.$notify({
             group: "foo",
             type: 'error',
             title: "Error",
-            text: `Error de Player`
+            text: "Error de Player"
           }); 
         });
     },
@@ -230,13 +228,12 @@ export default {
             me.listar();
             me.limpiar();
           })
-          .catch(function(error) {
-            console.log(error);
+          .catch(error =>{
             this.$notify({
             group: "foo",
             type: 'error',
             title: "Error",
-            text: `Error de Player`
+            text: "Error de Player"
           }); 
           });
       } else {
@@ -253,14 +250,13 @@ export default {
             me.listar();
             me.limpiar();
           })
-          .catch(function(error) {
-            console.log(error);
+          .catch(error => {
             this.$notify({
             group: "foo",
             type: 'error',
             title: "Error",
-            text: `Error de Player`
-          }); 
+            text: "Error de Player"
+          });  
           });
       }
     }

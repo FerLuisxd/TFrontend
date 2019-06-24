@@ -152,8 +152,7 @@ export default {
           console.log(response);
           me.tournaments = response.data;
         })
-        .catch(function(error) {
-          console.log(error);
+        .catch(error => {
           this.$notify({
             group: "foo",
             type: 'error',
@@ -204,8 +203,7 @@ export default {
             });
           });
         })
-        .catch(function(error) {
-          console.log(error);
+        .catch(error => {
           this.$notify({
             group: "foo",
             type: 'error',
@@ -229,8 +227,7 @@ export default {
             });
           });
         })
-        .catch(function(error) {
-          console.log(error);
+        .catch(error =>{
           this.$notify({
             group: "foo",
             type: 'error',
@@ -262,12 +259,12 @@ export default {
           });
         }
       })
-      .catch((err)=>{
+      .catch(error =>{
         this.$notify({
             group: "foo",
             type: 'error',
             title: "Error",
-            text: `Error de Torneo`
+            text: "Error de Tournament"
           });
       });
     },
@@ -294,19 +291,18 @@ export default {
             group: "foo",
             type: 'warn',
             title: "Alerta",
-            text: "No se puede guardar porque el usuario ya tiene un torneo en curso o ese nombre de torneo ya existe"
+            text: "No se puede editar porque el nombre es duplicado o el torneo ya se jugo"
           });}
             me.close();
             me.listar();
             me.limpiar();
           })
-          .catch(function(error) {
-            console.log(error);
+          .catch(error =>{
             this.$notify({
             group: "foo",
             type: 'error',
             title: "Error",
-            text: `Error de Torneo`
+            text: "Error de Tournament"
           });            
           });
       } else {
@@ -329,19 +325,18 @@ export default {
             group: "foo",
             type: 'warn',
             title: "Alerta",
-            text: "No se puede guardar porque el usuario ya tiene un torneo en curso o ese nombre de torneo ya existe"
+            text: "No se puede guardar porque el nombre ya existe o el usuario ya ha creado otro torneo"
           });}
             me.close();
             me.listar();
             me.limpiar();
           })
-          .catch(function(error) {
-            console.log(error);
+          .catch(error => {
             this.$notify({
             group: "foo",
             type: 'error',
             title: "Error",
-            text: `Error de Torneo`
+            text: "Error de Tournament"
           });
           });
       }
