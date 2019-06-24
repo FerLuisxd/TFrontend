@@ -2,7 +2,7 @@
   <v-layout align-start>
     <v-flex>
       <v-toolbar flat color="white">
-        <v-toolbar-title>Tournaments</v-toolbar-title>
+        <v-toolbar-title>Matches by Tournament</v-toolbar-title>
         <v-divider class="mx-2" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-text-field
@@ -15,7 +15,6 @@
         ></v-text-field>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
-          <v-btn slot="activator" color="primary" dark class="mb-2">New</v-btn>
           <v-card>
             <v-card-title>
               <span class="headline">{{ formTitle }}</span>
@@ -25,22 +24,19 @@
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12 sm12 md12>
-                    <v-text-field v-model="name" label="Name"></v-text-field>
+                    <v-text-field v-model="winnerId" label="Winner"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm12 md12>
-                     <v-date-picker v-model="date" label="Date"></v-date-picker>
+                     <v-text-field v-model="fase" label="Fase"></v-text-field>
                   </v-flex>
                 <v-flex xs12 sm12 md12>
-                    <v-text-field v-model="winner" label="Winner"></v-text-field>
+                     <v-select v-model="team1Id" :items="teams" label="Team 1"></v-select>
                   </v-flex>
                   <v-flex xs12 sm12 md12>
-                    <v-select v-model="playerId" :items="players" label="Creator"></v-select>
+                    <v-select v-model="team2Id" :items="teams" label="Team 2"></v-select>
                   </v-flex>
                   <v-flex xs12 sm12 md12>
-                    <v-text-field v-model="nTeams" label="Teams Number"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm12 md12>
-                    <v-select v-model="modeId" :items="modes" label="Mode"></v-select>
+                    <v-select v-model="tournamentId" :items="tournaments" label="Tournament"></v-select>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -54,22 +50,17 @@
           </v-card>
         </v-dialog>
       </v-toolbar>
-      <v-data-table :headers="headers" :items="tournaments" :search="search" class="elevation-1">
+      <v-data-table :headers="headers" :items="matches" :search="search" class="elevation-1">
         <template slot="items" slot-scope="props">
 
           <td class="justify-content-start layout px-5">
            <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-           <v-icon small class="mr-2" @click="generar(props.item.id)">gavel</v-icon>
-           <v-btn @click="toMatch(props.item.id)">Matches</v-btn>
           </td>          
-
-          <td>{{ props.item.name }}</td>
-          <td>{{ props.item.date }}</td>
-          <td>{{ props.item.winner }}</td>
-          <td>{{ props.item.playerName }}</td>
-          <td>{{ props.item.nTeams }}</td>
-          <td>{{ props.item.modeFormat }}</td>
-
+          <td>{{ props.item.winnerName }}</td>
+          <td>{{ props.item.fase }}</td>
+          <td>{{ props.item.team1Name }}</td>
+          <td>{{ props.item.team2Name }}</td>
+          <td>{{ props.item.tournamentName }}</td>
         </template>
       </v-data-table>
     </v-flex>
@@ -80,35 +71,30 @@ import axios from "axios";
 export default {
   data: vm => {      
     return {
-    date: new Date().toISOString().substr(0, 10),
-      dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),  
-      tournaments: [],      
+      matches: [],      
       dialog: false,
       headers: [
         { text: "Opciones", value: "opciones", sortable: false },
-        { text: "Name", value: "name", sortable: false },
-        { text: "Date", value: "date", sortable: false },
-        { text: "Winner", value: "winner" },
-        { text: "Creador", value: "playerName" },
-        { text: "Teams Number", value: "nTeams" },
-        { text: "Mode", value: "modeFormat" },
+        { text: "Winner", value: "winnerName", sortable: false },
+        { text: "Fase", value: "fase", sortable: true },
+        { text: "Team #1", value: "team1Name",sortable: false },
+        { text: "Team #2", value: "team2Name",sortable: false },
+        { text: "Tournament", value: "tournamentName",sortable: false }
       ],
       search: "",
       editedIndex: -1,
 
       //Model
       id: "",
-      name: "",
-      date: "",
-      winner: "",
-      playerId: "",
-      nTeams: "",
-      modeId: "",
-      modeFormat: "",
+      winnerId: "",
+      fase: "",
+      team1Id: "",
+      team2Id: "",
+      tournamentId: "",
 
       //Arreglos
-      modes: [],
-      players: []
+      teams: [],
+      tournaments: []
     };
   },
   computed: {
@@ -116,7 +102,7 @@ export default {
         return this.formatDate(this.date)
       },
     formTitle() {
-      return this.editedIndex === -1 ? "New Tournament" : "Update Tournament";
+      return this.editedIndex === -1 ? "New Match" : "Update Matches";
     }
   },
 
@@ -131,28 +117,25 @@ export default {
 
   created() {
     this.listar();
-    this.listarplayers();
-    this.listarmodes();
+    this.listarteams();
+    this.listartournaments();
   },
-
   methods: {
-        toMatch(id){
-          this.$router.push(`/match/tournament/${id}`)
-          //({name: 'userIndex', query: { page: '123' } });
-        },
        formatDate (date) {
         if (!date) return null
 
         const [year, month, day] = date.split('-')
         return `${year}-${month}-${day}`
       },
-    listar() {
+    listar() {  
+      var k; 
+      k = this.$route.params.id;
       let me = this;
       axios
-        .get("api/tournament")
+        .get(`api/match/tournament/${k}`)
         .then(function(response) {
           console.log(response);          
-          me.tournaments = response.data;
+          me.matches = response.data;
         })
         .catch(function(error) {
           console.log(error);
@@ -164,37 +147,31 @@ export default {
     
     editItem(item) {
       this.id = item.id;
-      this.name = item.name;
-      this.dateFormatted = item.date;
-      this.winner  = item.winner;
-      this.playerId  = item.playerId;
-      this.nTeams = item.nTeams;
-      this.modeId  = item.modeId;
+      this.winnerId = item.winnerId;
+      this.fase = item.fase;
+      this.team1Id  = item.team1Id;
+      this.team2Id  = item.team2Id;
+      this.tournamentId = item.team1Id;
 
       this.editedIndex = 1;
       this.dialog = true;
     },
-        close() {
+
+  
+
+    close() {
       this.dialog = false;
     },
-    limpiar() {
-      this.id =         "";
-      this.name =       "";
-      this.date =       "";
-      this.winner  =    "";
-      this.playerId  =  "";
-      this.nTeams =     "";
-      this.modeId  =    "";
-    },
+    
 
-    listarplayers() {
+    listarteams() {
             let me = this;
-            var playersArray = [];
-            axios.get('api/player').then( (response) =>{
+            var teamsArray = [];
+            axios.get('api/team').then( (response) =>{
                 // console.log(response.data);
-                playersArray = response.data;
-                playersArray.map((p) => {
-                    me.players.push({
+                teamsArray = response.data;
+                teamsArray.map((p) => {
+                    me.teams.push({
                         text: p.name,
                         value: p.id
                     });
@@ -203,44 +180,36 @@ export default {
                 console.log(error);
             });
         },
-    listarmodes() {
+    listartournaments() {
     let me = this;
-    var modesArray = [];
-    axios.get('api/mode').then( (response) =>{
+    var tournamentsArray = [];
+    axios.get('api/tournament').then( (response) =>{
         // console.log(response.data);
-        modesArray = response.data;
-        modesArray.map((p) => {
-            me.modes.push({
-                text: p.format,
+        tournamentsArray = response.data;
+        tournamentsArray.map((p) => {
+            me.tournaments.push({
+                text: p.name,
                 value: p.id
             });
         });
     }).catch(function (error) {
         console.log(error);
     });
-    },    
-
-    generar(id)
-    {           
-        console.log(id);
-        axios 
-          .put(`api/tournament/${id}`, {            
-          })             
     },
+    
     guardar() {
       if (this.editedIndex > -1) {
         //Código para editar
 
         let me = this;
         axios 
-          .put("api/tournament", {
-            id: me.id,
-            name  :        me.name,
-            date :        me.dateFormatted,
-            winner   :    me.winner,
-            playerId   :   me.playerId,
-            nTeams  :     me.nTeams,
-            modeId   :     me.modeId
+          .put("api/match", {
+            id:           me.id,
+            fase      :        me.fase,
+            team1Id      :        me.team1Id,
+            team2Id      :    me.team2Id,
+            tournamentId   :   me.tournamentId,
+            winnerId      :     me.winnerId
           })
           .then(function(response) {
               console.log(response);
@@ -255,13 +224,12 @@ export default {
         //Código para guardar
         let me = this;
         axios
-          .post("api/tournament", {
-            name  :        me.name,
-            date :        me.dateFormatted,
-            winner   :    me.winner,
-            playerId   :   me.playerId,
-            nTeams  :     me.nTeams,
-            modeId   :     me.modeId
+          .post("api/match", {
+            fase      :        me.fase,
+            team1Id      :        me.team1Id,
+            team2Id      :    me.team2Id,
+            tournamentId   :   me.tournamentId,
+            winnerId      :     me.winnerId
           })
           .then(function(response) {
               console.log(response);

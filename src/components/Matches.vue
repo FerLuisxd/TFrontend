@@ -77,10 +77,10 @@ export default {
       headers: [
         { text: "Opciones", value: "opciones", sortable: false },
         { text: "Winner", value: "winnerName", sortable: false },
-        { text: "Fase", value: "fase", sortable: false },
-        { text: "Team #1", value: "team1Name" },
-        { text: "Team #2", value: "team2Name" },
-        { text: "Tournament", value: "tournamentName" }
+        { text: "Fase", value: "fase", sortable: true },
+        { text: "Team #1", value: "team1Name",sortable: false },
+        { text: "Team #2", value: "team2Name",sortable: false },
+        { text: "Tournament", value: "tournamentName",sortable: false }
       ],
       search: "",
       editedIndex: -1,
