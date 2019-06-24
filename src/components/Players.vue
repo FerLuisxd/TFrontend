@@ -164,6 +164,13 @@ export default {
         .then((response)=> {
           me.players = response.data;
           this.listar();
+          if (response.data != true) {
+          this.$notify({
+            group: "foo",
+            type: 'warn',
+            title: "Alerta",
+            text: "No se puede guardar porque el usuario ya tiene un torneo en curso"
+          });}
         })
         .catch(function(error){
           console.log(error);

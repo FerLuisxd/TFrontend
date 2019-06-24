@@ -51,6 +51,7 @@
 
 
           <td class="justify-content-start layout px-5">
+            <v-icon small class="mr-2" @click="deleteItem(props.item.id)">delete</v-icon>
            <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
           </td>
 
@@ -108,7 +109,26 @@ export default {
       val || this.close();
     }
   },
-
+  deleteItem(id)
+    {
+      let me = this;
+      axios
+        .delete('api/team/'+id)
+        .then((response)=> {
+          me.teams = response.data;
+          this.listar();
+          if (response.data != true) {
+          this.$notify({
+            group: "foo",
+            type: 'warn',
+            title: "Alerta",
+            text: "No se puede guardar porque el equipo esta en un torneo en curso"
+          });}
+        })
+        .catch(function(error){
+          console.log(error);
+        });
+    },
   created() {
     //TODO
     this.listar();
