@@ -15,7 +15,7 @@
         ></v-text-field>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
-          <v-btn slot="activator" color="blue" dark class="mb-2">Nuevo</v-btn>
+          <v-btn slot="activator" color="blue" dark class="mb-2">New</v-btn>
           <v-card>
             <v-card-title>
               <span class="headline">{{ formTitle }}</span>
@@ -89,7 +89,7 @@ export default {
       id:"",
       name:"",
       nMembers:0    ,
-      tournamentId:null,
+      tournamentId:"",
 
       tournaments:[]
 
@@ -126,6 +126,26 @@ export default {
         })
 
     },
+    listartournaments(){
+      let me = this;
+      var tournamentArray=[];
+      axios.get('api/tournament').then((response)=>{
+          tournamentArray=response.data;
+          tournamentArray.map((p)=>{
+            me.tournaments.push({
+              text: p.name,
+              value:p.id
+            });
+          });
+          }).catch(error =>{
+              this.$notify({
+            group: "foo",
+            type: 'error',
+            title: "Error",
+            text: "Error de Team"
+          });
+          });
+    },
     editItem(item) {
       //TODO
       this.id=item.id;
@@ -135,7 +155,6 @@ export default {
       this.editedIndex = 1;
       this.dialog = true;
     },
-
     deleteItem(id)
     {
       let me = this;
@@ -169,50 +188,29 @@ export default {
           }); 
         });
     },
-
     close() {
       this.dialog = false;
+      this.editedIndex=-12;
     },
     limpiar() {
       this.id = "";
       this.name = "";
       this.nMembers = 0;
-      this.tournamentId = null;
+      this.tournamentId = ""
       //this.direccion = "";
       //this.telefono = "";
-    },
-    listartournaments(){
-      let me = this;
-      var tournamentArray=[];
-      axios.get('api/tournament').then((response)=>{
-          tournamentArray=response.data;
-          tournamentArray.map((p)=>{
-            me.tournaments.push({
-              text: p.name,
-              value:p.id
-            });
-          });
-          }).catch(error =>{
-              this.$notify({
-            group: "foo",
-            type: 'error',
-            title: "Error",
-            text: "Error de Team"
-          });
-          });
-    },
+    },    
+        
     guardar() {
      //TODO
-    if (this.editedIndex > -12) {
-        //Código para editar
-
-        let me = this;
+     if (this.editedIndex > -12) {
+       let me = this;
         axios 
           .put("api/team", {
             id: me.id,
             name: me.name,
             nMembers: me.nMembers,
-            tournamentId: me.tournamentId!=null? me.tournamentId : null
+            tournamentId: me.tournamentId!=0? me.tournamentId : null
           })
           .then(function(response) {
             me.close();
@@ -224,17 +222,18 @@ export default {
             group: "foo",
             type: 'error',
             title: "Error",
-            text: "Error de Team"
+            text: "Error al editar"
           }); 
           });
-      } else {
+     }
+     else{
         //Código para guardar
         let me = this;
         axios
           .post("api/team", {
             name: me.name,
             nMembers: me.nMembers,
-            tournamentId: me.tournamentId !=null? me.tournamentId : null
+            tournamentId: me.tournamentId
           })
           .then(function(response) {
             me.close();
@@ -246,11 +245,11 @@ export default {
             group: "foo",
             type: 'error',
             title: "Error",
-            text: "Error de Team"
+            text: "Error al crear"
           }); 
           });
       }
     }
-  }
+    }
 };
 </script>

@@ -197,6 +197,7 @@ export default {
 
     close() {
       this.dialog = false;
+      this.editedIndex=-12;
     },
     limpiar() {
       this.id = "";
