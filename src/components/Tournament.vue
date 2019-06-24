@@ -60,7 +60,7 @@
           <td class="justify-content-start layout px-5">
            <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
            <v-icon small class="mr-2" @click="generar(props.item.id)">gavel</v-icon>
-           <v-btn to="/match/">Matches</v-btn>
+           <v-btn @click="toMatch(props.item.id)">Matches</v-btn>
           </td>          
 
           <td>{{ props.item.name }}</td>
@@ -136,6 +136,9 @@ export default {
   },
 
   methods: {
+        toMatch(id){
+          this.$router.push(`match/${id}`)
+        },
        formatDate (date) {
         if (!date) return null
 

@@ -3,9 +3,11 @@ import './plugins/vuetify'
 import App from './App.vue'
 import router from './router'
 import store from './store.js'
-
+import VueRouter from 'vue-router'
 import axios from 'axios'
 
+
+Vue.use(VueRouter)
 Vue.config.productionTip = false
 
 axios.defaults.baseURL='http://localhost:5000/'
