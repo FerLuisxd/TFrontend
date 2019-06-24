@@ -19,7 +19,6 @@
             <v-card-title>
               <span class="headline">{{ formTitle }}</span>
             </v-card-title>
-
             <v-card-text>
               <v-container grid-list-md>
                 <v-layout wrap>
@@ -195,53 +194,8 @@ export default {
     }).catch(function (error) {
         console.log(error);
     });
-    },
-    
-    guardar() {
-      if (this.editedIndex > -1) {
-        //Código para editar
+    },    
 
-        let me = this;
-        axios 
-          .put("api/match", {
-            id:           me.id,
-            fase      :        me.fase,
-            team1Id      :        me.team1Id,
-            team2Id      :    me.team2Id,
-            tournamentId   :   me.tournamentId,
-            winnerId      :     me.winnerId
-          })
-          .then(function(response) {
-              console.log(response);
-            me.close();
-            me.listar();
-            me.limpiar();
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
-      } else {
-        //Código para guardar
-        let me = this;
-        axios
-          .post("api/match", {
-            fase      :        me.fase,
-            team1Id      :        me.team1Id,
-            team2Id      :    me.team2Id,
-            tournamentId   :   me.tournamentId,
-            winnerId      :     me.winnerId
-          })
-          .then(function(response) {
-              console.log(response);
-            me.close();
-            me.listar();
-            me.limpiar();
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
-      }
-    }
   }
 };
 </script>
