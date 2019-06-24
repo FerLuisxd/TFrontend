@@ -124,14 +124,14 @@ export default {
     filtrar(xkills, xdeaths, xassits, xdamage) {
         let me = this;
       axios
-        .get('api/empleado/'+me.sueldo)
+        .get('api/statistics/'+me.xkills+'/'+me.xdeaths+'/'+me.xassits+'/'+me.xdamage)
         .then((response)=> {
-                me.empleados = response.data;
+                me.statistics = response.data;
         })
         .catch(function(error){
             console.log(error);
         });
-    },  
+    },
 
     editItem(item) {
       
