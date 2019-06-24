@@ -43,17 +43,17 @@
 
 
       </v-toolbar>
-      <v-data-table :headers="headers" :items="statistics" :search="search" class="elevation-1">
+      <v-data-table :headers="headers" :items="statistics" :search="search" class="elevation-1">         
         <template slot="items" slot-scope="props">
+        <td class="justify-content-start layout px-5">                 
+           <v-btn color="gray" @click="redirect(props.item.playerId)" >Check Statistics</v-btn>
+          </td>  
           <td>{{ props.item.matchId }}</td>
           <td>{{ props.item.playerName }}</td>
           <td>{{ props.item.kills }}</td>
           <td>{{ props.item.deaths }}</td>
           <td>{{ props.item.assists }}</td>
           <td>{{ props.item.damage }}</td>
-        </template>
-        <template slot="no-data">
-          <v-btn color="primary" @click="listar">Resetear</v-btn>
         </template>
       </v-data-table>
     </v-flex>
@@ -68,6 +68,7 @@ export default {
       statistics: [],      
       dialog: false,
       headers: [
+        { text: "Opciones", value: "opciones", sortable: false },
         { text: "Match", value: "matchId", sortable: true },
         { text: "Player", value: "playerName", sortable: true },
         { text: "Kills", value: "kills", sortable: false },
@@ -86,6 +87,10 @@ export default {
       deaths: "",
       assists: "",
       damage: "", 
+      xkills:"",
+      xdeaths:"",
+      xassists:"",
+      xdamage:"",
 
       //Arreglos
       players: []
@@ -108,12 +113,15 @@ export default {
     this.listarplayers();
   },
   methods: {
+    redirect(string){
+        this.$router.push(`/Statistics/player/`+string)
+    },
     listar() {
       var k; 
       k = this.$route.params.id;
       let me = this;
       axios
-        .get("api/statistics")
+        .get(`api/statistics/match/${k}`)
         .then(function(response) {
           console.log(response);
           me.statistics = response.data;
@@ -142,24 +150,8 @@ export default {
             console.log(error);
         });
     },
-
-    editItem(item) {
-      
-    },
-
-  
-
     close() {
       this.dialog = false;
-    },
-    limpiar() {
-      this.id =         "";
-      this.matchid =       "";
-      this.playerId =       "";
-      this.kills  =    "";
-      this.deaths  =  "";
-      this.assists =     "";
-      this.damage  =    "";
     },
 
     listarplayers() {

@@ -54,6 +54,7 @@
 
           <td class="justify-content-start layout px-5">
            <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
+           <v-btn color="gray" @click="toStatistics(props.item.id)" >Check Statistics</v-btn>
           </td>          
           <td>{{ props.item.winnerName }}</td>
           <td>{{ props.item.fase }}</td>
@@ -122,6 +123,11 @@ export default {
     this.listartournaments();
   },
   methods: {
+        toStatistics(id)
+    {
+        this.$router.push(`/statistics/match/${id}`)
+
+    },
        formatDate (date) {
         if (!date) return null
 
