@@ -232,7 +232,7 @@ export default {
       console.log(id);
       axios.put(`api/tournament/${id}`).then(response => {
         console.log("response", response.data);
-        if (response.data == false) {
+        if (response.data != true) {
           this.$notify({
             group: "foo",
             type: 'warn',
@@ -240,6 +240,14 @@ export default {
             text: "No se puede generar data de torneo"
           });
         }
+      })
+      .catch((err)=>{
+        this.$notify({
+            group: "foo",
+            type: 'warn',
+            title: "Alerta",
+            text: `Error de Torneo`
+          });
       });
     },
     guardar() {
