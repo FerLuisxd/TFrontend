@@ -2,7 +2,7 @@
   <v-layout align-start>
     <v-flex>
       <v-toolbar flat color="white">
-        <v-toolbar-title>Matches by Tournament</v-toolbar-title>
+        <v-toolbar-title>{{tournamentName}} : Matches</v-toolbar-title>
         <v-divider class="mx-2" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-text-field
@@ -91,6 +91,8 @@ export default {
       team2Id: "",
       tournamentId: "",
 
+      tournamentName: "",
+
       //Arreglos
       teams: [],
       tournaments: []
@@ -135,6 +137,7 @@ export default {
         .then(function(response) {
           console.log(response);          
           me.matches = response.data;
+          me.tournamentName = response.data[0].tournamentName;
         })
         .catch(function(error) {
           console.log(error);

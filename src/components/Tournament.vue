@@ -138,7 +138,6 @@ export default {
   methods: {
         toMatch(id){
           this.$router.push(`/match/tournament/${id}`)
-          //({name: 'userIndex', query: { page: '123' } });
         },
        formatDate (date) {
         if (!date) return null
