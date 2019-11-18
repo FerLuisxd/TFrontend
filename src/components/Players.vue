@@ -130,6 +130,19 @@ export default {
         })
 
     },
+     async   listar2(){
+            let me= this;
+      let res = await axios
+        .get("api/player")
+        // .then(function(response){
+        //     me.teams = response.data;
+        //     return response.data
+        // }).catch(e=>{
+        //   console.log(e)
+        //    return e
+        // })
+ me.players = res.data;
+    },
     listarteams() {
       //TODO
       let me= this;

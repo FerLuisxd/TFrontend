@@ -149,7 +149,7 @@ export default {
       axios
         .get("api/tournament")
         .then(function(response) {
-          console.log(response);
+          // console.log(response);
           me.tournaments = response.data;
         })
         .catch(error => {
@@ -160,6 +160,19 @@ export default {
             text: `Error de Torneo`
           });
         });
+    },
+   async listar2(){
+            let me= this;
+      let res = await axios
+        .get("api/tournament")
+        // .then(function(response){
+        //     me.teams = response.data;
+        //     return response.data
+        // }).catch(e=>{
+        //   console.log(e)
+        //    return e
+        // })
+ me.tournaments = res.data;
     },
 
     editItem(item) {
@@ -240,7 +253,7 @@ export default {
     generar(id) {
       console.log(id);
       axios.put(`api/tournament/${id}`).then(response => {
-        console.log("response", response.data);
+        // console.log("response", response.data);
         if (response.data == true) {
           this.$notify({
             group: "foo",
@@ -284,7 +297,7 @@ export default {
             game : me.game,
           })
           .then(function(response) {
-            console.log(response);
+            // console.log(response);
              if (response.data != true) {
           this.$notify({
             group: "foo",
@@ -318,7 +331,7 @@ export default {
             game: me.game
           })
           .then(function(response) {
-            console.log(response);
+            // console.log(response);
                         if (response.data != true) {
           this.$notify({
             group: "foo",

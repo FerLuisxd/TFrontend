@@ -2,7 +2,7 @@
   <v-layout align-start>
     <v-flex>
       <v-toolbar flat color="white">
-        <v-toolbar-title>Teams</v-toolbar-title>  
+        <v-toolbar-title id='teamss'>Teams</v-toolbar-title>  
         <v-divider class="mx-2" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-text-field
@@ -15,7 +15,7 @@
         ></v-text-field>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
-          <v-btn slot="activator" color="blue" dark class="mb-2">New</v-btn>
+          <v-btn id='new' slot="activator" color="blue" dark class="mb-2">New</v-btn>
           <v-card>
             <v-card-title>
               <span class="headline">{{ formTitle }}</span>
@@ -25,7 +25,7 @@
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12 sm12 md12>
-                    <v-text-field v-model="name" label="Name"></v-text-field>          
+                    <v-text-field  id='teamName'  v-model="name" label="Name"></v-text-field>          
                   </v-flex>
                   <v-flex xs12 sm12 md12>
                     <v-select v-model="tournamentId" :items="tournaments" label="Tournament"></v-select>   
@@ -38,7 +38,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-12" flat @click.native="close">Cancelar</v-btn>
-              <v-btn color="blue darken-12" flat @click.native="guardar">Guardar</v-btn>
+              <v-btn id='save' color="blue darken-12" flat @click.native="guardar">Guardar</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -116,15 +116,19 @@ export default {
  
 
   methods: {
-    listar() {
+    async listar() {
       //TODO
       let me= this;
-      axios
+      let res = await axios
         .get("api/team")
-        .then(function(response){
-            me.teams = response.data;
-        })
-
+        // .then(function(response){
+        //     me.teams = response.data;
+        //     return response.data
+        // }).catch(e=>{
+        //   console.log(e)
+        //    return e
+        // })
+    me.teams=res.data
     },
     listartournaments(){
       let me = this;
@@ -163,29 +167,30 @@ export default {
         .then((response)=> {
           me.teams = response.data;
           if (response.data == true) {
-          this.$notify({
-            group: "foo",
-            type: 'success',
-            title: "Alerta",
-            text: "Datos del torneo generados"
-          });
+          // this.$notify({
+          //   group: "foo",
+          //   type: 'success',
+          //   title: "Alerta",
+          //   text: "Datos del torneo generados"
+          // });
           this.listar();
           }
           if (response.data != true) {
-          this.$notify({
-            group: "foo",
-            type: 'warn',
-            title: "Alerta",
-            text: "No se puede borrar porque el equipo esta en un torneo en curso"
-          });}
+          // this.$notify({
+          //   group: "foo",
+          //   type: 'warn',
+          //   title: "Alerta",
+          //   text: "No se puede borrar porque el equipo esta en un torneo en curso"
+          // });
+          }
         })
         .catch(error =>{
-          this.$notify({
-            group: "foo",
-            type: 'error',
-            title: "Error",
-            text: "Error de Team"
-          }); 
+          // this.$notify({
+          //   group: "foo",
+          //   type: 'error',
+          //   title: "Error",
+          //   text: "Error de Team"
+          // }); 
         });
     },
     close() {
@@ -218,12 +223,12 @@ export default {
             me.limpiar();
           })
           .catch(error => {
-            this.$notify({
-            group: "foo",
-            type: 'error',
-            title: "Error",
-            text: "Error al editar"
-          }); 
+          //   this.$notify({
+          //   group: "foo",
+          //   type: 'error',
+          //   title: "Error",
+          //   text: "Error al editar"
+          // }); 
           });
      }
      else{
@@ -241,12 +246,12 @@ export default {
             me.limpiar();
           })
           .catch(error => {
-            this.$notify({
-            group: "foo",
-            type: 'error',
-            title: "Error",
-            text: "Error al crear"
-          }); 
+          //   this.$notify({
+          //   group: "foo",
+          //   type: 'error',
+          //   title: "Error",
+          //   text: "Error al crear"
+          // }); 
           });
       }
     }
